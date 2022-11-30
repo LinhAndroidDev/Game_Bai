@@ -18,10 +18,11 @@ class SecondActivity : AppCompatActivity() {
     var b1: Int = 0
     var b2: Int = 0
     var b3: Int = 0
-    var kq1: Int = 1
-    var kq2: Int = 2
-    var kq3: Int = 3
+    var kq1: Int = -1
+    var kq2: Int = -2
+    var kq3: Int = -3
     var arrlabai: ArrayList<Int> = ArrayList()
+    var listlabai: ArrayList<Int> = ArrayList()
     var ramb1:Random = Random()
     var ramb2:Random = Random()
     var ramb3:Random = Random()
@@ -39,9 +40,7 @@ class SecondActivity : AppCompatActivity() {
         var tiengLatBai:MediaPlayer = MediaPlayer.create(this@SecondActivity,R.raw.tienggamebai)
 
         //Tạo random
-        var ram1: Random = Random()
-        var ram2: Random = Random()
-        var ram3: Random = Random()
+        var ram: Random = Random()
 
         //lá bài 1
         laBai1.setOnClickListener {
@@ -52,7 +51,7 @@ class SecondActivity : AppCompatActivity() {
 
             //Tạo giá trị cho lá bài 1
             do {
-                kq1 = ram1.nextInt(51)
+                kq1 = ram.nextInt(51)
             }while (kq1 == kq2 || kq2 == kq3 || kq3 == kq1)
 
                 laBai1.animate().apply {
@@ -63,6 +62,7 @@ class SecondActivity : AppCompatActivity() {
                         duration = 200
                         rotationYBy(90f)
                         laBai1.setBackgroundResource(arrlabai.get(kq1))
+                        arrlabai.remove(kq1)
                         InKetQua();
                     }
                 }
@@ -77,7 +77,7 @@ class SecondActivity : AppCompatActivity() {
 
             //Tạo giá trị cho lá bài 2
             do {
-                kq2 = ram1.nextInt(51)
+                kq2 = ram.nextInt(51)
             }while (kq1 == kq2 || kq2 == kq3 || kq3 == kq1)
 
                 laBai2.animate().apply {
@@ -88,6 +88,7 @@ class SecondActivity : AppCompatActivity() {
                         duration = 200
                         rotationYBy(90f)
                         laBai2.setBackgroundResource(arrlabai.get(kq2))
+                        arrlabai.remove(kq2)
                         InKetQua();
                     }
                 }
@@ -102,7 +103,7 @@ class SecondActivity : AppCompatActivity() {
 
             //Tạo giá trị cho giá trị 3
             do {
-                kq1 = ram1.nextInt(51)
+                kq3 = ram.nextInt(51)
             }while (kq1 == kq2 || kq2 == kq3 || kq3 == kq1)
 
                 laBai3.animate().apply {
@@ -113,20 +114,17 @@ class SecondActivity : AppCompatActivity() {
                         duration = 200
                         rotationYBy(90f)
                         laBai3.setBackgroundResource(arrlabai.get(kq3))
+                        arrlabai.remove(kq3)
                         InKetQua();
                     }
                 }
         }
     }
 
-    private fun LaBaiBoss() {
-        b1 = b1 % 13+1
-        b2 = b2 % 13+1
-        b3 = b3 % 13+1
-    }
-
     private fun ClickRestart() {
         restart.setOnClickListener {
+            arrlabai = listlabai.clone() as ArrayList<Int>
+
             laBai1.isChecked = false
             laBai2.isChecked = false
             laBai3.isChecked = false
@@ -256,6 +254,8 @@ class SecondActivity : AppCompatActivity() {
         arrlabai.add(R.drawable.bichj)
         arrlabai.add(R.drawable.bichq)
         arrlabai.add(R.drawable.bichk)
+
+        listlabai = arrlabai.clone() as ArrayList<Int>
     }
 
     private fun InKetQua() {
@@ -264,51 +264,68 @@ class SecondActivity : AppCompatActivity() {
             //tạo kết quả lá bài boss
             TaoLaBaiBoss()
 
-            //Tạo lá bài boss
-            LaBaiBoss()
+            object : CountDownTimer(500, 500) {
+                override fun onTick(millisUntilFinished: Long) {
 
-            kq1 = kq1 % 13+1
-            kq2 = kq2 % 13+1
-            kq3 = kq3 % 13+1
-
-            var player = kq1 + kq2 + kq3
-            if(player % 10 == 0){
-                player = player % 10 + 10
-            }else{
-                player = player % 10
-            }
-
-            var boss = b1 + b2 + b3 + 3
-
-            if(boss % 10 == 0){
-                boss = boss % 10 + 10
-            }else {
-                boss = boss % 10
-            }
-
-            var kq = player - boss
-
-            if(kq > 0){
-                ketqua.setText("Chúc mừng bạn đã thắng")
-            }
-            else if(kq < 0){
-                ketqua.setText("Chủ phòng thắng")
-            }else if(kq == 0){
-                ketqua.setText("Hoà rồi")
-            }
-
-            ketqua.animate().apply {
-                duration = 400
-                scaleXBy(1f)
-                scaleYBy(1f)
-            }.withEndAction {
-                ketqua.animate().apply {
-                    duration = 400
-                    scaleXBy(-1f)
-                    scaleYBy(-1f)
                 }
-            }
-            }
+                override fun onFinish() {
+                    //Tạo lá bài boss
+                    b1 = b1 % 13+1
+                    b2 = b2 % 13+1
+                    b3 = b3 % 13+1
+
+                    kq1 = kq1 % 13+1
+                    kq2 = kq2 % 13+1
+                    kq3 = kq3 % 13+1
+
+                    var player = kq1 + kq2 + kq3
+                    if(player % 10 == 0){
+                        player = player % 10 + 10
+                    }else{
+                        player = player % 10
+                    }
+
+                    var boss = b1 + b2 + b3
+
+                    if(boss % 10 == 0){
+                        boss = boss % 10 + 10
+                    }else {
+                        boss = boss % 10
+                    }
+
+                    var kq = player - boss
+
+                    listArrLaBai.setText(arrlabai.size.toString())
+                    listLaBai.setText(listlabai.size.toString())
+
+                    if(kq > 0){
+                        ketqua.setText("Chúc mừng bạn đã thắng")
+                        var winGame:MediaPlayer = MediaPlayer.create(this@SecondActivity,R.raw.amthanhwinbai)
+                        winGame.start()
+                    }
+                    else if(kq < 0){
+                        ketqua.setText("Chủ phòng thắng")
+                        var lossGame:MediaPlayer = MediaPlayer.create(this@SecondActivity,R.raw.amthanhloss)
+                        lossGame.start()
+                    }else if(kq == 0){
+                        ketqua.setText("Hoà rồi")
+                    }
+
+                    ketqua.animate().apply {
+                        duration = 400
+                        scaleXBy(1f)
+                        scaleYBy(1f)
+                    }.withEndAction {
+                        ketqua.animate().apply {
+                            duration = 400
+                            scaleXBy(-1f)
+                            scaleYBy(-1f)
+                        }
+                    }
+                }
+            }.start()
+
+        }
         }
 
     private fun TaoLaBaiBoss() {
