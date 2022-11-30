@@ -21,29 +21,21 @@
             android:layout_height="wrap_content"
             />
         <TextView
-            android:id="@+id/diemChuPhong"
+            android:id="@+id/listArrLaBai"
+            android:textSize="25dp"
+            android:textColor="#111"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginLeft="20dp"
-            android:textSize="30dp"
-            android:textColor="#111"/>
+            android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/diemNguoiChoi"
+            android:id="@+id/listLaBai"
+            android:textSize="25dp"
+            android:textColor="#111"
+            android:textStyle="bold"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginLeft="20dp"
-            android:textSize="30dp"
-            android:textColor="#111"/>
-        <TextView
-            android:id="@+id/diemCuaTui"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:layout_marginLeft="20dp"
-            android:textSize="30dp"
-            android:textColor="#111"/>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
