@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CDDC39"
+    android:background="@drawable/arr"
     android:orientation="vertical"
     android:weightSum="12"
     tools:context=".SecondActivity">
@@ -20,22 +20,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
-        <TextView
-            android:id="@+id/listArrLaBai"
-            android:textSize="25dp"
-            android:textColor="#111"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/listLaBai"
-            android:textSize="25dp"
-            android:textColor="#111"
-            android:textStyle="bold"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <LinearLayout
@@ -110,8 +94,8 @@
         android:layout_margin="5dp"
         android:text="Kết Quả"
         android:textStyle="bold"
-        android:textColor="#111"
-        android:textSize="35dp"/>
+        android:textColor="#EAD203"
+        android:textSize="35sp"/>
 
     <LinearLayout
         android:layout_width="match_parent"

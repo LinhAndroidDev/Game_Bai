@@ -37,7 +37,7 @@ class SecondActivity : AppCompatActivity() {
         //Tạo mảng lá bài
         TaoMangLaBai()
 
-        var tiengLatBai:MediaPlayer = MediaPlayer.create(this@SecondActivity,R.raw.tienggamebai)
+        val tiengLatBai:MediaPlayer = MediaPlayer.create(this@SecondActivity,R.raw.tienggamebai)
 
         //Tạo random
         var ram: Random = Random()
@@ -261,10 +261,12 @@ class SecondActivity : AppCompatActivity() {
     private fun InKetQua() {
         //In ra kết quả
         if (laBai1.isChecked  && laBai2.isChecked && laBai3.isChecked) {
+            restart.visibility
+
             //tạo kết quả lá bài boss
             TaoLaBaiBoss()
 
-            object : CountDownTimer(500, 500) {
+            object : CountDownTimer(1000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
 
                 }
@@ -295,9 +297,6 @@ class SecondActivity : AppCompatActivity() {
 
                     var kq = player - boss
 
-                    listArrLaBai.setText(arrlabai.size.toString())
-                    listLaBai.setText(listlabai.size.toString())
-
                     if(kq > 0){
                         ketqua.setText("Chúc mừng bạn đã thắng")
                         var winGame:MediaPlayer = MediaPlayer.create(this@SecondActivity,R.raw.amthanhwinbai)
@@ -311,17 +310,19 @@ class SecondActivity : AppCompatActivity() {
                         ketqua.setText("Hoà rồi")
                     }
 
-                    ketqua.animate().apply {
-                        duration = 400
-                        scaleXBy(1f)
-                        scaleYBy(1f)
-                    }.withEndAction {
-                        ketqua.animate().apply {
-                            duration = 400
-                            scaleXBy(-1f)
-                            scaleYBy(-1f)
-                        }
-                    }
+        var animation_ketqua:Animation = AnimationUtils.loadAnimation(this@SecondActivity,R.anim.ketqua)
+        ketqua.animation = animation_ketqua
+//                    ketqua.animate().apply {
+//                        duration = 400
+//                        scaleXBy(1f)
+//                        scaleYBy(1f)
+//                    }.withEndAction {
+//                        ketqua.animate().apply {
+//                            duration = 400
+//                            scaleXBy(-1f)
+//                            scaleYBy(-1f)
+//                        }
+//                    }
                 }
             }.start()
 
