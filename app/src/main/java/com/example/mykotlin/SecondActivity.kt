@@ -1,19 +1,25 @@
 package com.example.mykotlin
 
+import android.content.pm.ActivityInfo
 import android.graphics.drawable.LayerDrawable
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.transition.Visibility
 import kotlinx.android.synthetic.main.activity_second.*
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.List
 
+@Suppress("UNSAFE_CALL_ON_PARTIALLY_DEFINED_RESOURCE")
 class SecondActivity : AppCompatActivity() {
     var b1: Int = 0
     var b2: Int = 0
@@ -30,6 +36,10 @@ class SecondActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+        setSpinner()
 
         //Click restart
         ClickRestart()
@@ -121,8 +131,26 @@ class SecondActivity : AppCompatActivity() {
         }
     }
 
+    private fun setSpinner() {
+        val money : MutableList<Int> = mutableListOf()
+        money.add(100)
+        money.add(200)
+        money.add(500)
+        money.add(1000)
+        money.add(2000)
+        money.add(5000)
+        val adapterMoney : ArrayAdapter<Int> = ArrayAdapter(this,android.R.layout.simple_spinner_dropdown_item,money)
+        if(setMoney != null){
+            setMoney.adapter = adapterMoney
+        }
+    }
+
     private fun ClickRestart() {
         restart.setOnClickListener {
+            restart.visibility = View.INVISIBLE
+            ketqua.clearAnimation()
+            ketqua.visibility = View.INVISIBLE
+
             arrlabai = listlabai.clone() as ArrayList<Int>
 
             laBai1.isChecked = false
@@ -261,8 +289,6 @@ class SecondActivity : AppCompatActivity() {
     private fun InKetQua() {
         //In ra kết quả
         if (laBai1.isChecked  && laBai2.isChecked && laBai3.isChecked) {
-            restart.visibility
-
             //tạo kết quả lá bài boss
             TaoLaBaiBoss()
 
@@ -298,34 +324,25 @@ class SecondActivity : AppCompatActivity() {
                     var kq = player - boss
 
                     if(kq > 0){
-                        ketqua.setText("Chúc mừng bạn đã thắng")
+                        ketqua.text = "Chúc mừng bạn đã thắng"
                         var winGame:MediaPlayer = MediaPlayer.create(this@SecondActivity,R.raw.amthanhwinbai)
                         winGame.start()
                     }
                     else if(kq < 0){
-                        ketqua.setText("Chủ phòng thắng")
+                        ketqua.text = "Chủ phòng thắng"
                         var lossGame:MediaPlayer = MediaPlayer.create(this@SecondActivity,R.raw.amthanhloss)
                         lossGame.start()
                     }else if(kq == 0){
-                        ketqua.setText("Hoà rồi")
+                        ketqua.text = "Hoà rồi"
                     }
 
         var animation_ketqua:Animation = AnimationUtils.loadAnimation(this@SecondActivity,R.anim.ketqua)
         ketqua.animation = animation_ketqua
-//                    ketqua.animate().apply {
-//                        duration = 400
-//                        scaleXBy(1f)
-//                        scaleYBy(1f)
-//                    }.withEndAction {
-//                        ketqua.animate().apply {
-//                            duration = 400
-//                            scaleXBy(-1f)
-//                            scaleYBy(-1f)
-//                        }
-//                    }
+
+        restart.visibility = View.VISIBLE
+        ketqua.visibility = View.VISIBLE
                 }
             }.start()
-
         }
         }
 
